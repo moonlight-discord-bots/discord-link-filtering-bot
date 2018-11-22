@@ -17,7 +17,7 @@ exports.run = async (client, message, args) => {
     console.error(err)
     err = err.toString()
 
-    if (err.includes(message.token)) err = err.replace(client.token, 'Not for your eyes')
+    if (err.includes(client.token)) err = err.replace(client.token, 'Not for your eyes')
 
     return message.channel.send(err, {code: 'js'})
   }
