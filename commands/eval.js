@@ -1,6 +1,7 @@
 exports.run = async (client, message, args) => {
 
-  const content = args.join(' ');
+  const content = args.join(' ').replace(/client\.token/gmi, '\'Not for your eyes\'')
+
 
   try {
     let result = await eval(content)
