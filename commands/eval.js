@@ -1,24 +1,26 @@
-exports.run = (client, message, args) => {
+exports.run = async (client, message, args) => {
 
   const content = args.join(' ');
-  const result = new Promise((resolve, reject) => resolve(eval(content)));
 
-  return result.then(output => {
-   if (typeof output !== 'string') output = require('util').inspect(output, {
-   depth: 0
-   });
-   if (output.includes(client.token)) output = output.replace(client.token, 'Not for your eyes');
-   if (output.length > 1990) console.log(output), output = 'Too long to be printed (content got console logged)';
+  try {
+    let result = await eval(content)
+    if (typeof result !== 'string') result = require('util').inspect(result, {
+    depth: 0
+    })
 
-   message.channel.send(output, {code: 'js'});
-  }).catch(err => {
-   console.error(err);
-   err = err.toString();
+    if (result.includes(client.token)) result = result.replace(client.token, 'Not for your eyes')
+    if (result.length > 1990) console.log(result), result = 'Too long to be printed (content got console logged)'
 
-   if (err.includes(message.token)) err = err.replace(client.token, 'Not for your eyes');
+    message.channel.send(result, {code: 'js'})
 
-   return message.channel.send(err, {code: 'js'});
-  });
+  } catch(err) {
+    console.error(err)
+    err = err.toString()
+
+    if (err.includes(message.token)) err = err.replace(client.token, 'Not for your eyes')
+
+    return message.channel.send(err, {code: 'js'})
+  }
 }
 
 exports.help = {
