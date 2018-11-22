@@ -9,7 +9,10 @@ exports.run = async (client, message, args) => {
     })
 
     if (result.includes(client.token)) result = result.replace(client.token, 'Not for your eyes')
-    if (result.length > 1990) console.log(result), result = 'Too long to be printed (content got console logged)'
+    if (result.length > 1990) {
+      console.log(result)
+      result = 'Too long to be printed (content got console logged)'
+    }
 
     message.channel.send(result, {code: 'js'})
 
